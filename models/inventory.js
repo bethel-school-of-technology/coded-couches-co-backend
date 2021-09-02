@@ -3,7 +3,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Inventory extends Model {
     static associate(models) {
-      // define association here
+      this.belongsTo(models.User);
     }
   }
   Inventory.init(
