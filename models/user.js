@@ -1,25 +1,24 @@
-/* jshint indent: 2 */
-
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user', {
-    username: {
-      type: DataTypes.STRING(16),
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    password: {
-      type: DataTypes.STRING(32),
-      allowNull: false
-    },
-    create_time: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class User extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
     }
+  };
+  User.init({
+    username: DataTypes.STRING,
+    password: DataTypes.STRING
   }, {
-    tableName: 'user'
+    sequelize,
+    modelName: 'User',
   });
+  return User;
 };
