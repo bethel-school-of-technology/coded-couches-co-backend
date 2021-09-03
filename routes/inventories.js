@@ -10,6 +10,19 @@ router.get("/", function (req, res, next) {
 });
 
 // Post, create an inventory
+router.post("/", (req, res, next) => {
+  Inventory.create({
+    name: req.body.name,
+    description: req.body.description,
+    // price: req.body.price,
+  })
+    .then((newInventory) => {
+      res.json(newInventory);
+    })
+    .catch(() => {
+      res.status(400).send();
+    });
+});
 
 // PUT ,
 

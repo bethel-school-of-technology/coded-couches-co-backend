@@ -31,7 +31,6 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-// Taylor wants to use {alter: true} in the sync() function, but it comes up with errors >>>>ask why this happens<<<<
 models.sequelize.sync({ alter: true }).then(function () {
   console.log("DB sync'd up");
 });
