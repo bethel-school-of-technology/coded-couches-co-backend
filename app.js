@@ -1,4 +1,3 @@
-var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
@@ -7,6 +6,7 @@ var models = require("./models");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var inventoriesRouter = require("./routes/inventories");
 
 var app = express();
 
@@ -20,14 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
-
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
@@ -39,8 +31,13 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-models.sequelize.sync().then(function () {
+// Taylor wants to use {alter: true} in the sync() function, but it comes up with errors >>>>ask why this happens<<<<
+models.sequelize.sync({ alter: true }).then(function () {
   console.log("DB sync'd up");
 });
+
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/inventories", inventoriesRouter);
 
 module.exports = app;
