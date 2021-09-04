@@ -46,6 +46,32 @@ router.post("/", (req, res, next) => {
     });
 });
 
-// PUT ,
+// PUT , update an inventory
+router.put("/:id", (req, res, next) => {
+  const inventoryId = parseInt(req.params.id);
+
+  if (!inventoryId || inventoryId <= 0) {
+    res.status(400).send("Invalid ID");
+    return;
+  }
+
+  Inventory.update(
+    {
+      name: req.body.name,
+      description: req.body.description,
+    },
+    {
+      where: {
+        id: inventoryId,
+      },
+    }
+  )
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch(() => {
+      res.status(400).send();
+    });
+});
 
 module.exports = router;
