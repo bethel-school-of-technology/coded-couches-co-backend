@@ -74,4 +74,26 @@ router.put("/:id", (req, res, next) => {
     });
 });
 
+// DELETE delete an inventory
+router.delete("/:id", (req, res, next) => {
+  const inventoryId = parseInt(req.params.id);
+
+  if (!inventoryId || inventoryId <= 0) {
+    res.status(400).send("Invalid ID");
+    return;
+  }
+
+  Inventory.destroy({
+    where: {
+      id: inventoryId,
+    },
+  })
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch(() => {
+      res.status(400).send();
+    });
+});
+
 module.exports = router;
