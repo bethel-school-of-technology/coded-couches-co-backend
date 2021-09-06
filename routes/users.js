@@ -34,8 +34,28 @@ router.post("/", async (req, res, next) => {
     });
 });
 
-// Register User
+// POST SignIn
+router.post("/login", async (req, res, next) => {
+  User.findOne({
+    where: {
+      username: req.body.username,
+    },
+  }).then(async (user) => {
+    //check if user exists
+    if (!user) {
+      res.status(404).send("Username does not exist");
+      return;
+    }
+    //check password
+    const valid = await bcrypt.compare(req.body.password, user.password);
 
-// SignIn
+    if (valid) {
+      //create the token
+      res.status(200).send("Hi " + user.username);
+    } else {
+      res.status(401).send("Invalid password");
+    }
+  });
+});
 
 module.exports = router;
