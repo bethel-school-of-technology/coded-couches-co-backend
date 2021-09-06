@@ -4,6 +4,8 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var models = require("./models");
 
+var auth = require("./services/auth");
+
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var inventoriesRouter = require("./routes/inventories");
@@ -29,6 +31,23 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+});
+
+app.use(async (req, res, next) => {
+  //get token from the request
+  const header = req.headers.authorization;
+
+  if (!header) {
+    return next();
+  }
+
+  const token = header.split(" ")[1];
+
+  //validate token / get the user
+  const user = await auth.verifyUser(token);
+
+  req.user = user;
+  next();
 });
 
 models.sequelize.sync({ alter: true }).then(function () {

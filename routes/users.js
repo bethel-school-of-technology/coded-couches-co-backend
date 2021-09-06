@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const { User } = require("../models");
 var bcrypt = require("bcrypt");
+var auth = require("../services/auth");
 
 // /* GET users listing. */
 // router.get("/", function (req, res, next) {
@@ -51,7 +52,8 @@ router.post("/login", async (req, res, next) => {
 
     if (valid) {
       //create the token
-      res.status(200).send("Hi " + user.username);
+      const jwt = auth.createJWT(user);
+      res.status(200).send({ jwt });
     } else {
       res.status(401).send("Invalid password");
     }
