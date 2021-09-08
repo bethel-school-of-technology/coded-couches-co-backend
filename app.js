@@ -17,12 +17,14 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
-
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -46,12 +48,14 @@ app.use(function (err, req, res, next) {
 app.use(async (req, res, next) => {
   //get token from the request
   const header = req.headers.authorization;
+  console.log("HEADER", header);
 
   if (!header) {
     return next();
   }
 
   const token = header.split(" ")[1];
+  console.log("TOKEN", token);
 
   //validate token / get the user
   const user = await auth.verifyUser(token);
