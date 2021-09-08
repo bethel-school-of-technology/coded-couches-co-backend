@@ -12,7 +12,7 @@ router.get("/", function (req, res, next) {
 // Post, Register User
 router.post("/", async (req, res, next) => {
   if (!req.body.username || !req.body.password) {
-    res.status(400).semd("Username and password is required");
+    res.status(400).send("Username and password is required");
     return;
   }
 

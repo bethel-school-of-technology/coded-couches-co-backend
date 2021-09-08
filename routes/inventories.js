@@ -35,7 +35,7 @@ router.get("/:id", (req, res, next) => {
 router.post("/", async (req, res, next) => {
   // //validate token / get the user
   const user = req.user;
-  console.log("header", header);
+
   if (!user) {
     res.status(403).send();
     return;
