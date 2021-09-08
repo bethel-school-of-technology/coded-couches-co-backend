@@ -45,6 +45,7 @@ router.post("/", async (req, res, next) => {
   Inventory.create({
     name: req.body.name,
     description: req.body.description,
+    price: req.body.price,
     UserId: user.id,
     // price: req.body.price,
   })
@@ -70,6 +71,7 @@ router.put("/:id", (req, res, next) => {
     {
       name: req.body.name,
       description: req.body.description,
+      price: req.body.price,
     },
     {
       where: {
