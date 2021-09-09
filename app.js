@@ -48,14 +48,12 @@ app.use(function (err, req, res, next) {
 app.use(async (req, res, next) => {
   //get token from the request
   const header = req.headers.authorization;
-  console.log("HEADER", header);
 
   if (!header) {
     return next();
   }
 
   const token = header.split(" ")[1];
-  console.log("TOKEN", token);
 
   //validate token / get the user
   const user = await auth.verifyUser(token);

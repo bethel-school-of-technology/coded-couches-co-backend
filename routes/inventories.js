@@ -47,7 +47,6 @@ router.post("/", async (req, res, next) => {
     description: req.body.description,
     price: req.body.price,
     UserId: user.id,
-    // price: req.body.price,
   })
     .then((newInventory) => {
       res.json(newInventory);
