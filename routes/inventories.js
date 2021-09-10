@@ -36,7 +36,7 @@ router.post("/", async (req, res, next) => {
   // //validate token / get the user
   const user = req.user;
 
-  if (!user) {
+  if (!user.admin) {
     res.status(403).send();
     return;
   }
@@ -63,7 +63,8 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", (req, res, next) => {
   const inventoryId = parseInt(req.params.id);
 
-  if (!inventoryId || inventoryId <= 0) {
+  if (!inventoryId || !user.admin) {
+    //changed inventoryId <=0
     res.status(400).send("Invalid ID");
     return;
   }
@@ -93,7 +94,8 @@ router.put("/:id", (req, res, next) => {
 router.delete("/:id", (req, res, next) => {
   const inventoryId = parseInt(req.params.id);
 
-  if (!inventoryId || inventoryId <= 0) {
+  if (!inventoryId || !user.admin) {
+    //changed inventoryId <= 0
     res.status(400).send("Invalid ID");
     return;
   }
