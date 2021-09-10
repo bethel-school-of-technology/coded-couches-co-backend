@@ -12,6 +12,7 @@ router.get("/", function (req, res, next) {
 //GET: /:id get individual inventory
 router.get("/:id", (req, res, next) => {
   const inventoryId = parseInt(req.params.id);
+  const user = req.user;
 
   Inventory.findOne({
     where: {
@@ -44,12 +45,10 @@ router.post("/", async (req, res, next) => {
   // you have access to JWT -> what user are you working with
   // check if the "admin" value on the authenticated user is true or false
 
-  //create the inventory with the user id (I want to be able to implement price into the models for admin to add/update prices)
   Inventory.create({
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
-    UserId: user.id,
   })
     .then((newInventory) => {
       res.json(newInventory);
@@ -63,8 +62,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", (req, res, next) => {
   const inventoryId = parseInt(req.params.id);
 
-  if (!inventoryId || !user.admin) {
-    //changed inventoryId <=0
+  if (!inventoryId || inventoryId <= 0) {
     res.status(400).send("Invalid ID");
     return;
   }
@@ -93,9 +91,9 @@ router.put("/:id", (req, res, next) => {
 // DELETE: delete an inventory
 router.delete("/:id", (req, res, next) => {
   const inventoryId = parseInt(req.params.id);
+  const user = req.user;
 
-  if (!inventoryId || !user.admin) {
-    //changed inventoryId <= 0
+  if (!inventoryId || inventoryId <= 0) {
     res.status(400).send("Invalid ID");
     return;
   }

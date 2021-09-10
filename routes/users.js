@@ -64,7 +64,8 @@ router.post("/login", async (req, res, next) => {
 router.delete("/:id", (req, res, next) => {
   const userId = parseInt(req.params.id);
 
-  if (!userId || userId <= 0) {
+  if (!userId || !user.admin) {
+    //changed userId <= 0 to admin
     res.status(400).send("Invalid ID");
     return;
   }
