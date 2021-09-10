@@ -41,6 +41,9 @@ router.post("/", async (req, res, next) => {
     return;
   }
 
+  // you have access to JWT -> what user are you working with
+  // check if the "admin" value on the authenticated user is true or false
+
   //create the inventory with the user id (I want to be able to implement price into the models for admin to add/update prices)
   Inventory.create({
     name: req.body.name,
