@@ -16,6 +16,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       description: DataTypes.STRING,
+      price: {
+        type: DataTypes.DECIMAL(9, 2),
+        allowNull: false,
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
     },
 
     {

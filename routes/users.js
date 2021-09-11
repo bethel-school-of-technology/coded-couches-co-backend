@@ -12,7 +12,7 @@ router.get("/", function (req, res, next) {
 // Post, Register User
 router.post("/", async (req, res, next) => {
   if (!req.body.username || !req.body.password) {
-    res.status(400).semd("Username and password is required");
+    res.status(400).send("Username and password is required");
     return;
   }
 
@@ -58,6 +58,29 @@ router.post("/login", async (req, res, next) => {
       res.status(401).send("Invalid password");
     }
   });
+});
+
+// DELETE: delete a user (double check this route)
+router.delete("/:id", (req, res, next) => {
+  const userId = parseInt(req.params.id);
+
+  if (!userId || !user.admin) {
+    //changed userId <= 0 to admin
+    res.status(400).send("Invalid ID");
+    return;
+  }
+
+  User.destroy({
+    where: {
+      id: userId,
+    },
+  })
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch(() => {
+      res.status(400).send();
+    });
 });
 
 module.exports = router;
