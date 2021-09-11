@@ -12,7 +12,7 @@ router.get("/", function (req, res, next) {
 //GET: /:id get individual inventory
 router.get("/:id", (req, res, next) => {
   const inventoryId = parseInt(req.params.id);
-  const user = req.user;
+  // const user = req.user;
 
   Inventory.findOne({
     where: {
@@ -36,6 +36,7 @@ router.get("/:id", (req, res, next) => {
 router.post("/", async (req, res, next) => {
   // //validate token / get the user
   const user = req.user;
+  console.log(user);
 
   if (!user.admin) {
     res.status(403).send();
@@ -61,10 +62,13 @@ router.post("/", async (req, res, next) => {
 // PUT: update an inventory
 router.put("/:id", (req, res, next) => {
   const inventoryId = parseInt(req.params.id);
+  const currentUser = req.user;
 
   if (!inventoryId || inventoryId <= 0) {
-    res.status(400).send("Invalid ID");
-    return;
+    if (!currentUser.admin) {
+      res.status(400).send("Invalid ID");
+      return;
+    }
   }
 
   //compare the inventory's userid to the token user id
@@ -81,7 +85,7 @@ router.put("/:id", (req, res, next) => {
     }
   )
     .then(() => {
-      res.status(204).send();
+      res.status(200).send();
     })
     .catch(() => {
       res.status(400).send();
@@ -94,8 +98,10 @@ router.delete("/:id", (req, res, next) => {
   const user = req.user;
 
   if (!inventoryId || inventoryId <= 0) {
-    res.status(400).send("Invalid ID");
-    return;
+    if (!currentUser.admin) {
+      res.status(400).send("Invalid ID");
+      return;
+    }
   }
 
   Inventory.destroy({

@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL(9, 2),
         allowNull: false,
       },
+      quantity: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
     },
 
     {
