@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.INTEGER,
       orderTotal: {
         type: DataTypes.DECIMAL(9, 2),
-        allowNull: false,
+        //Does not like me using allowNull here similar to inventory.js model
       },
     },
     {
