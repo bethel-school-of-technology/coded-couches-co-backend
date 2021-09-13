@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Order.init(
     {
-      orderId: DataTypes.INTEGER,
       // inventoryId: DataTypes.ARRAY(DataTypes.INTEGER),
       inventoryId: DataTypes.INTEGER,
       userId: DataTypes.INTEGER,
