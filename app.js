@@ -10,6 +10,7 @@ var auth = require("./services/auth");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var inventoriesRouter = require("./routes/inventories");
+var ordersRouter = require("./routes/orders");
 
 var app = express();
 
