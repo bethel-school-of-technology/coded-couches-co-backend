@@ -70,5 +70,6 @@ models.sequelize.sync({ alter: true }).then(function () {
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/inventories", inventoriesRouter);
+app.use("/orders", ordersRouter);
 
 module.exports = app;

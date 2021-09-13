@@ -4,8 +4,8 @@ const { Order } = require("../models");
 
 //GET return all orders
 router.get("/", function (req, res, next) {
-  Order.findAll().then((orderList) => {
-    res.json(orderList);
+  Order.findAll().then((result) => {
+    res.json(result);
   });
   //res.send('respond with a resource');
 });
@@ -21,7 +21,7 @@ router.post("/", (req, res, next) => {
       res.json(newOrder);
     })
     .catch(() => {
-      res.status(500);
+      res.status(400).send;
     });
 });
 
