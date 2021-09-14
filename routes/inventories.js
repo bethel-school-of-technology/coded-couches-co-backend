@@ -38,10 +38,10 @@ router.post("/", async (req, res, next) => {
   const user = req.user;
   console.log(user);
 
-  if (!user.admin) {
-    res.status(403).send();
-    return;
-  }
+  // if (!user.admin) {
+  //   res.status(403).send();
+  //   return;
+  // }
 
   // you have access to JWT -> what user are you working with
   // check if the "admin" value on the authenticated user is true or false
@@ -50,6 +50,7 @@ router.post("/", async (req, res, next) => {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
+    quantity: req.body.quantity
   })
     .then((newInventory) => {
       res.json(newInventory);
@@ -77,6 +78,7 @@ router.put("/:id", (req, res, next) => {
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
+      quantity: req.body.quantity
     },
     {
       where: {
