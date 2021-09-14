@@ -6,7 +6,9 @@ var auth = require("../services/auth");
 
 // /* GET users listing. */
 router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
+  User.findAll({}).then((result) => {
+    res.json(result);
+  });
 });
 
 // Post, Register User
