@@ -33,6 +33,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 // POST: create an inventory
+
 router.post("/", async (req, res, next) => {
   // //validate token / get the user
   const user = req.user;
@@ -50,7 +51,7 @@ router.post("/", async (req, res, next) => {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
-    quantity: req.body.quantity
+    quantity: req.body.quantity,
   })
     .then((newInventory) => {
       res.json(newInventory);
@@ -72,13 +73,12 @@ router.put("/:id", (req, res, next) => {
     }
   }
 
-  //compare the inventory's userid to the token user id
   Inventory.update(
     {
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
-      quantity: req.body.quantity
+      quantity: req.body.quantity,
     },
     {
       where: {
