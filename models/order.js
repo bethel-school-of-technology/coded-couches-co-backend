@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL(9, 2),
         //Does not like me using allowNull here similar to inventory.js model
       },
+      invoiceNumber: DataTypes.INTEGER,
     },
     {
       sequelize,
