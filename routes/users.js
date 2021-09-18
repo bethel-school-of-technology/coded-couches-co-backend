@@ -129,4 +129,29 @@ router.put("/:id", async (req, res, next) => {
     });
 });
 
+//GET: /:id get individual inventory
+router.get("/:id", (req, res, next) => {
+  const userId = parseInt(req.params.id);
+  // const user = req.user;
+
+  User.findOne({
+    where: {
+      id: userId,
+    },
+  }).then(
+    (theUser) => {
+      if (theUser) {
+        res.json(theUser);
+      } else {
+        res.status(404).send(err);
+      }
+    },
+    (err) => {
+      res.status(500).send(err);
+    }
+  );
+});
+
+
+
 module.exports = router;
