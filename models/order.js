@@ -12,20 +12,16 @@ module.exports = (sequelize, DataTypes) => {
     {
       // inventoryId: DataTypes.ARRAY(DataTypes.INTEGER),
       inventoryId: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
       orderTotal: {
         type: DataTypes.DECIMAL(9, 2),
         //Does not like me using allowNull here similar to inventory.js model
       },
-      invoiceNumber: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: "Order",
     }
   );
-  Order.associate = (models) => {
-    Order.belongsTo(models.User);
-  };
-
   return Order;
 };

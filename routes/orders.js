@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const { Order } = require("../models");
+const authService = require("../services/auth");
 
 //GET return all orders
 router.get("/", function (req, res, next) {
@@ -25,8 +26,48 @@ router.get("/", function (req, res, next) {
 //     });
 // });
 
+router.post("/checkout", (request, response, next) => {
+  // request.data.order
+  // [{itemId:1, itemQuantity:2}, {itemId:2, itemQunatity:1}]
+  // validation:
+  // - valid user: check auth user
+  // - check in database that itemIds exists: find an item with the requested itemID
+  // - validate type of value...
+  // do the math to calcuate totat price. create the order and store it.
+  // items: itemId=1 qtt=5 qtt-itemQuantity
+});
+
+// Checkout attempt V
+router.post("/checkout", (req, res, next) => {
+  const inventoryId = parseInt(req.params.id);
+  const user = req.user;
+  authService.verifyUser(user).then((user) => {
+    if (!inventoryId || inventoryId <= 0) {
+      if (!user) {
+        res.status(400).send("Invalid ID");
+        return;
+      }
+    }
+    Inventory.update(
+      {
+        quantity: quantity - req.body.quantity,
+      },
+      {
+        where: {
+          id: inventoryId,
+        },
+      }
+    )
+      .then(() => {
+        res.status(200).send();
+      })
+      .catch(() => {
+        res.status(400).send();
+      });
+  });
+});
+
 router.post("/", async (req, res, next) => {
-  // //validate token / get the user
   const user = req.user;
   console.log(user);
 
@@ -34,9 +75,6 @@ router.post("/", async (req, res, next) => {
     res.status(403).send("You must be logged in to place order");
     return;
   }
-
-  // you have access to JWT -> what user are you working with
-  // check if the "admin" value on the authenticated user is true or false
 
   Order.create({
     inventoryId: req.body.inventoryId,
