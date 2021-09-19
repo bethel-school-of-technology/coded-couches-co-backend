@@ -15,7 +15,6 @@ router.get("/", function (req, res, next) {
   });
 });
 
-
 // Post, Register User
 router.post("/", async (req, res, next) => {
   if (!req.body.username || !req.body.password) {
@@ -34,7 +33,7 @@ router.post("/", async (req, res, next) => {
     .then((newUser) => {
       res.json({
         id: newUser.id,
-        username: newUser.username
+        username: newUser.username,
       });
     })
     .catch(() => {
@@ -49,16 +48,12 @@ router.post("/login", async (req, res, next) => {
       username: req.body.username,
     },
   }).then(async (user) => {
-    //check if user exists
     if (!user) {
       res.status(404).send("Username does not exist");
       return;
     }
-    //check password
     const valid = await bcrypt.compare(req.body.password, user.password);
-
     if (valid) {
-      //create the token
       const jwt = auth.createJWT(user);
       res.status(200).send({ jwt });
     } else {
@@ -90,7 +85,6 @@ router.delete("/:id", (req, res, next) => {
     });
 });
 
-
 // PUT , update a user
 router.put("/:id", async (req, res, next) => {
   const userId = parseInt(req.params.id);
@@ -99,12 +93,6 @@ router.put("/:id", async (req, res, next) => {
     res.status(400).send("Invalid ID");
     return;
   }
-
-  //get the inventory from jwt
-
-  //get the cat already in the database
-
-  //compare the inventory's userid to the token user id
 
   // hash the password
   const salt = await bcrypt.genSalt(10);
