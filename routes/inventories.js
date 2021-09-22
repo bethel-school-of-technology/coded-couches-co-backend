@@ -52,6 +52,7 @@ router.post("/", async (req, res, next) => {
     description: req.body.description,
     price: req.body.price,
     quantity: req.body.quantity,
+    image: req.body.image
   })
     .then((newInventory) => {
       res.json(newInventory);
@@ -79,6 +80,7 @@ router.put("/:id", (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
       quantity: req.body.quantity,
+      image: req.body.image
     },
     {
       where: {
