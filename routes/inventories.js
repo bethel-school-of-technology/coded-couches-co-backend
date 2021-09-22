@@ -63,6 +63,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // PUT: update an inventory
+//more comments
 router.put("/:id", (req, res, next) => {
   const inventoryId = parseInt(req.params.id);
   const currentUser = req.user;
