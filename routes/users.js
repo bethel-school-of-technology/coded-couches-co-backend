@@ -55,12 +55,13 @@ router.post("/login", async (req, res, next) => {
     const valid = await bcrypt.compare(req.body.password, user.password);
     if (valid) {
       const jwt = auth.createJWT(user);
-      res.status(200).send({ jwt });
+      res.status(200).send({ user, jwt });
     } else {
       res.status(401).send("Invalid password");
     }
   });
 });
+
 
 // DELETE: delete a user (double check this route)
 router.delete("/:id", (req, res, next) => {
