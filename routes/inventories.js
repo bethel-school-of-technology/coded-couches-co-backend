@@ -35,8 +35,8 @@ router.get("/:id", (req, res, next) => {
 // POST: create an inventory
 
 router.post("/", async (req, res, next) => {
-  // //validate token / get the user
-  const user = req.user;
+  //validate token / get the user
+  const user = req.body.user;
   console.log(user);
 
   // if (!user.admin) {
